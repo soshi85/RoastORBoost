@@ -1,0 +1,8 @@
+{
+  "ok": false,
+  "requestId": "req_mock_404",
+  "error": {
+    "code": "INVALID_FILE_TYPE",
+    "message": "فقط فایل PDF مجاز است."
+  }
+}
