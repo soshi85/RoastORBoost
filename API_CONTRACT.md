@@ -1,32 +1,35 @@
-# Visionet Roast & Boost - API Contract
+# API Contract (Roast & Boost)
 
-این سند ساختار ارتباطی بین فرانت‌اند (پرهام)، بک‌اند (سوشیانت/کسری) و هوش مصنوعی (نیما) را مشخص می‌کند. تمام دیتاها با این فرمت رد و بدل خواهند شد.
+## Base URL
+`/api/v1`
 
 ## 1. Upload API (دریافت رزومه و پردازش)
+- **Endpoint:** `POST /api/v1/upload`
+- **Description:** دریافت فایل PDF، استخراج متن، ارسال به AI و برگرداندن نتیجه Roast/Boost.
+- **Request Type:** `multipart/form-data`
+- **Key:** `file` (فرمت PDF، حداکثر ۵ مگابایت)
 
-*   **Endpoint:** `POST /upload`
-*   **Description:** دریافت فایل PDF از کاربر، ارسال به هوش مصنوعی و برگرداندن نتیجه نهایی.
-*   **Request Type:** `multipart/form-data`
-*   **Key:** `file` (فایل رزومه کاربر با فرمت PDF)
-
-### ✅ Success Response (وضعیت 200 OK)
-**نکته مهم برای فرانت‌اند:** مقادیر `roast_text` و `boost_tips` در خروجی نهایی ثابت نیستند و توسط هوش مصنوعی به صورت داینامیک (Dynamic) برای هر کاربر تولید می‌شوند. پرهام جان، فعلاً از این ساختار به عنوان Mock Data برای طراحی UI استفاده کن.
-
+### Success Response (200 OK)
 ```json
 {
-  "status": "success",
-  "message": "Resume processed successfully",
+  "ok": true,
+  "requestId": "req_123456",
   "data": {
-    "roast_text": "متن طنز و نقد بی‌رحمانه رزومه (تولید توسط هوش مصنوعی - نوع داده: String)",
-    "boost_tips": [
-      "پیشنهاد جدی اول برای بهبود رزومه (تولید توسط هوش مصنوعی - نوع داده: String)",
-      "پیشنهاد جدی دوم...",
-      "پیشنهاد جدی سوم..."
-    ]
+    "roast": [
+      "نقد اول",
+      "نقد دوم",
+      "نقد سوم"
+    ],
+    "boost": [
+      {
+        "title": "عنوان پیشنهاد",
+        "why": "دلیل اهمیت",
+        "action": "اقدام مشخص"
+      }
+    ],
+    "meta": {
+      "fileName": "resume.pdf",
+      "processedAt": "2026-09-16T12:00:00Z"
+    }
   }
-}
-
-{
-  "status": "error",
-  "message": "Error: Only PDF files are allowed! (نوع خطا به صورت متنی برگردانده می‌شود)"
 }
