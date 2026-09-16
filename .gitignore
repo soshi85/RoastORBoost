@@ -9,3 +9,4 @@ __pycache__/
 # Uploaded Files
 uploads/*
 !uploads/.keep
+.env
