@@ -1,11 +1,13 @@
-# مسیر فایل: core/pdf_extractor.py
+import pymupdf
 
 def extract_text_from_pdf(file_path: str) -> str:
-    """
-    این تابع فعلا یک ماک (Mock) است.
-    بعداً کدهای اصلی مهیار (PyPDF2 یا pdfminer) دقیقاً اینجا قرار می‌گیرند.
-    """
-    # در آینده، مهیار فایلی که در file_path هست را می‌خواند و متن واقعی را برمی‌گرداند.
-    dummy_text = "این یک متن تستی است که از رزومه استخراج شده و به دروغ می‌گوید من برنامه‌نویس ارشدم!"
+    doc = pymupdf.open(file_path)
+
+    text = ""
+
+    for page in doc:
+        text += page.get_text()
+
+    doc.close()
     
-    return dummy_text
+    return text
