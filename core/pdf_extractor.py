@@ -1,20 +1,11 @@
-import re
-
-import pymupdf
-
-
-def clean_text(text: str) -> str:
-    text = re.sub(r"[ \t]+", " ", text)
-    text = re.sub(r"\n{3,}", "\n\n", text)
-    text = "\n".join(line.strip() for line in text.splitlines())
-    return text.strip()
-
+# مسیر فایل: core/pdf_extractor.py
 
 def extract_text_from_pdf(file_path: str) -> str:
-    pages = []
-
-    with pymupdf.open(file_path) as doc:
-        for page in doc:
-            pages.append(page.get_text())
-
-    return clean_text("\n\n".join(pages))
+    """
+    این تابع فعلا یک ماک (Mock) است.
+    بعداً کدهای اصلی مهیار (PyPDF2 یا pdfminer) دقیقاً اینجا قرار می‌گیرند.
+    """
+    # در آینده، مهیار فایلی که در file_path هست را می‌خواند و متن واقعی را برمی‌گرداند.
+    dummy_text = "این یک متن تستی است که از رزومه استخراج شده و به دروغ می‌گوید من برنامه‌نویس ارشدم!"
+    
+    return dummy_text
