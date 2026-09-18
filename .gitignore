@@ -11,3 +11,4 @@ __pycache__/
 uploads/*
 !uploads/.keep
 .env
+tests/test_pdfs/
