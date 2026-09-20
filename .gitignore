@@ -1,6 +1,7 @@
 # Environments
 venv/
 env/
+.venv/
 
 # Python Cache
 __pycache__/
@@ -9,3 +10,5 @@ __pycache__/
 # Uploaded Files
 uploads/*
 !uploads/.keep
+.env
+tests/test_pdfs/
