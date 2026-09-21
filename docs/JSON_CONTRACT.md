@@ -1,22 +1,24 @@
+# JSON Contract — Backend ↔ AI
 
----
+Backend runtime call:
 
-## 📄 فایل ۲: `JSON_CONTRACT.md` 
+```python
+await get_roast_and_boost(clean_resume_text)
+```
 
-```markdown
-# JSON Contract (Internal AI Communication)
-
-این سند قرارداد بین **Backend** و **AI** است.  
-نکته مهم: `requestId` و `meta` جزو خروجی AI نیستند و فقط توسط Backend اضافه می‌شوند.
-
----
-
-## 1. Request to AI (از طرف Backend به AI)
+AI must return exactly:
 
 ```json
 {
-  "resumeText": "متن پاک‌سازی شده رزومه",
-  "language": "fa",
-  "roastCount": 3,
-  "boostCount": 3
+  "roast": ["string", "string", "string"],
+  "boost": [
+    {"title":"string","why":"string","action":"string"},
+    {"title":"string","why":"string","action":"string"},
+    {"title":"string","why":"string","action":"string"}
+  ]
 }
+```
+
+No extra keys.
+
+`requestId`, `fileName`, and `processedAt` are Backend responsibilities.
