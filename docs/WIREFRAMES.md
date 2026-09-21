@@ -1,32 +1,16 @@
-# Wireframes (MVP - Day 1-2)
+# Wireframes — Week 1
 
-## 1. Landing Page
-- **هدف:** جذب کاربر و شروع سریع بدون اصطکاک.
-- **اجزا:**
-  - لوگو و نام پروژه (Roast & Boost)
-  - تیتر بزرگ: "رزومه‌ات رو نابود کن!"
-  - زیرتیتر: "AI اول می‌خندونه، بعد نجاتت می‌ده"
-  - دکمه اصلی (CTA): "رزومه‌ات رو نابود کن!" (باز کردن فایل سلکتور)
-  - متن کوچک: "فقط PDF — بدون نیاز به ثبت‌نام"
-- **Stateها:** Idle
+Landing:
+- title: Roast & Boost
+- CTA: انتخاب رزومه
+- note: فقط PDF، بدون ثبت‌نام
 
-## 2. Upload & Loading State
-- **هدف:** دریافت فایل و نگه داشتن کاربر با انیمیشن طنز.
-- **اجزا:**
-  - Drag & Drop Area: "فایل PDF رو اینجا بنداز یا کلیک کن"
-  - نام و حجم فایل انتخاب شده
-  - دکمه: "شروع نابودسازی"
-  - **Loading Messages (چرخشی):**
-    - ⏳ در حال پیدا کردن دروغ‌های رزومه‌ات...
-    - ⏳ داریم به Word و Excel می‌خندیم...
-    - ⏳ سه پیشنهاد جدی آماده می‌شود...
-- **Stateها:** Idle, FileSelected, Uploading, Processing, Error (نمایش خطا مثل عدم فرمت PDF)
+Upload/Loading states:
+Idle, FileSelected, Uploading, Processing, Error
 
-## 3. Result Page
-- **هدف:** نمایش خروجی Roast و Boost و دعوت به اشتراک‌گذاری.
-- **ترتیب نمایش:**
-  1. **Roast (نقد بی‌رحمانه):** لیست بولت‌پوینت‌های طنز.
-  2. **Boost (ارتقا و راهکار جدی):** کارت‌های شامل Title, Why, Action.
-  3. دکمه Shareable (نسخه v0): "اشتراک‌گذاری"
-  4. دکمه شروع مجدد: "تحلیل رزومه جدید"
-- **Stateها:** Success, Error
+Result:
+- 3 Roast bullet items
+- 3 Boost cards: title / why / action
+- button: تحلیل رزومه جدید
+
+Shareable can stay as a non-blocking placeholder in Week 1.
