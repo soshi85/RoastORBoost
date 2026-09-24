@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>آپلود رزومه — Roast & Boost</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <main class="upload-page">
+        <a href="index.html" class="back-link">← بازگشت</a>
+
+        <h1>رزومه‌ات رو بکش و رها کن</h1>
+
+        <!-- حالت انتخاب فایل -->
+        <div id="file-selection">
+            <label for="file-input" class="drop-zone" id="drop-zone">
+                <div class="drop-zone-content">
+                    <div class="drop-icon">📄</div>
+                    <p>فایل PDF رو اینجا بنداز یا کلیک کن</p>
+                    <p class="drop-hint">حداکثر ۵ مگابایت</p>
+                </div>
+                <input type="file" id="file-input" accept=".pdf,application/pdf" hidden>
+            </label>
+
+            <div id="file-info" class="file-info" hidden>
+                <span id="file-name"></span>
+                <span id="file-size"></span>
+                <button id="remove-file" class="remove-btn">✕</button>
+            </div>
+
+            <button id="submit-btn" class="cta-button" disabled>
+                شروع نابودسازی
+            </button>
+
+            <div id="error-message" class="error-message" hidden></div>
+        </div>
+
+        <!-- حالت لودینگ -->
+        <div id="loading" class="loading" hidden>
+            <div class="loading-spinner"></div>
+            <p id="loading-text">در حال پیدا کردن دروغ‌های رزومه‌ات...</p>
+        </div>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
