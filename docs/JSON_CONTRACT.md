@@ -1,13 +1,13 @@
 
 ---
 
-## 📄 فایل ۲: `JSON_CONTRACT.md` 
+## 📄 فایل ۲: `docs/JSON_CONTRACT.md` 
 
 ```markdown
 # JSON Contract (Internal AI Communication)
 
 این سند قرارداد بین **Backend** و **AI** است.  
-نکته مهم: `requestId` و `meta` جزو خروجی AI نیستند و فقط توسط Backend اضافه می‌شوند.
+نکته مهم: `status` و `message` جزو خروجی AI نیستند و فقط توسط Backend اضافه می‌شوند.
 
 ---
 
@@ -16,7 +16,5 @@
 ```json
 {
   "resumeText": "متن پاک‌سازی شده رزومه",
-  "language": "fa",
-  "roastCount": 3,
-  "boostCount": 3
+  "language": "fa"
 }
