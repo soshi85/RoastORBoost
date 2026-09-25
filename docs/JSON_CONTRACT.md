@@ -1,12 +1,6 @@
-# JSON Contract — Backend ↔ AI
+# JSON Contract — Week 2 Frozen Shared Schema
 
-Backend runtime call:
-
-```python
-await get_roast_and_boost(clean_resume_text)
-```
-
-AI must return exactly:
+AI + Backend + Frontend shared data object:
 
 ```json
 {
@@ -19,6 +13,14 @@ AI must return exactly:
 }
 ```
 
-No extra keys.
+Rules:
+- exactly 3 Roast strings
+- exactly 3 Boost objects
+- no extra keys
+- strings non-empty after normalization
+- Roast items distinct
+- Boost titles distinct
 
-`requestId`, `fileName`, and `processedAt` are Backend responsibilities.
+Normalize only whitespace. Old schemas (`roast_text`, `boost_tips`) are invalid and are NOT auto-converted.
+
+Backend adds `requestId` and `meta`; AI does not.
