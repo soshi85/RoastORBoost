@@ -1,0 +1,27 @@
+[
+  {
+    "id": "ali_junior_backend",
+    "source": "Sample resume set",
+    "resume_text": "علی رضایی — توسعه‌دهنده Backend جونیور\nخلاصه: دانش‌آموخته مهندسی کامپیوتر و علاقه‌مند به توسعه نرم‌افزار. تجربه Python و Django در پروژه‌های دانشگاهی و شخصی.\nتجربه: کارآموز برنامه‌نویسی؛ همکاری در توسعه API داخلی با Django REST، رفع باگ‌های تیم تست، Queryهای ساده PostgreSQL.\nپروژه شخصی: سیستم مدیریت هزینه؛ JWT و CRUD.\nمهارت‌ها: Python, Django, Django REST, PostgreSQL, Git, Docker, Linux, Microsoft Office."
+  },
+  {
+    "id": "sara_product_marketing",
+    "source": "Sample resume set",
+    "resume_text": "سارا احمدی — Product Marketing Specialist\nبیش از ۵ سال تجربه در بازاریابی و رشد محصولات دیجیتال.\nنتایج برجسته: ۳۸٪+ رشد Activation، ۲۶٪ کاهش CAC، ۴ لانچ محصول.\nتجربه: طراحی GTM، Positioning، Customer Research، Funnel Analysis و همکاری با Product/Sales/Data.\nپروژه منتخب: تحلیل cohort، مصاحبه با ۹ کاربر Churn شده و A/B Test؛ نسخه برنده نرخ بازگشت به Flow خرید را ۱۷٪ افزایش داد."
+  },
+  {
+    "id": "mehdi_data_transition",
+    "source": "Sample resume set",
+    "resume_text": "مهدی کریمی — در حال تغییر مسیر از عملیات به Data Analyst\n۶ سال سابقه عملیات و پشتیبانی؛ از ۱۴۰۲ وارد تحلیل داده شده.\nدستاورد: کاهش زمان گزارش‌گیری از حدود ۳ ساعت به ۴۵ دقیقه با Excel/Power Query.\nپروژه Churn: پاکسازی دیتاست ۵۰ هزار رکوردی، Cohort Analysis، Segment analysis، Dashboard شامل ARPU/Retention/Churn.\nمهارت‌ها: SQL, Excel/Power Query, Power BI, Python/Pandas, Statistics, Git."
+  },
+  {
+    "id": "synthetic_sparse_junior",
+    "source": "Synthetic edge case",
+    "resume_text": "مریم حسینی — Junior UI Designer\nتحصیلات: کارشناسی گرافیک.\nمهارت‌ها: Figma، Photoshop، Illustrator.\nپروژه‌ها: طراحی چند صفحه اپلیکیشن فروشگاهی و یک Landing Page تمرینی.\nتجربه کاری رسمی ذکر نشده است.\nخلاصه: علاقه‌مند به طراحی رابط کاربری، یادگیری و کار تیمی."
+  },
+  {
+    "id": "synthetic_strong_senior",
+    "source": "Synthetic edge case",
+    "resume_text": "رضا محمدی — Senior Backend Engineer\n۸ سال تجربه Backend.\nدر شرکت فعلی مالک مهاجرت یک سرویس پرترافیک از معماری Monolith به چند سرویس مستقل بوده و زمان پاسخ API را بر اساس مانیتورینگ داخلی ۳۲٪ کاهش داده است.\nStack: Python, FastAPI, PostgreSQL, Redis, Docker, Kubernetes.\nتجربه Mentoring سه توسعه‌دهنده و مشارکت در Code Review.\nرزومه شامل دستاوردهای عددی و مسئولیت‌های فنی مشخص است، اما خلاصه حرفه‌ای طولانی و بخش مهارت‌ها بدون اولویت‌بندی است."
+  }
+]
