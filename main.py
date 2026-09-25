@@ -1,36 +1,90 @@
-import os
-from fastapi import FastAPI, File, UploadFile, HTTPException
+from __future__ import annotations
 
-# ایمپورت کردن توابعی که الان ساختیم
+import uuid
+from datetime import datetime, timezone
+from pathlib import Path
+
+import pymupdf
+from fastapi import FastAPI, File, UploadFile
+from fastapi.responses import FileResponse, JSONResponse
+from fastapi.staticfiles import StaticFiles
+
+from core.ai_service import AIServiceError, get_roast_and_boost
 from core.pdf_extractor import extract_text_from_pdf
-from core.ai_service import get_roast_and_boost
 
+MAX_FILE_SIZE = 5 * 1024 * 1024
+UPLOAD_DIR = Path("uploads")
+UPLOAD_DIR.mkdir(exist_ok=True)
 
-app = FastAPI()
-os.makedirs("uploads", exist_ok=True)
+app = FastAPI(title="Roast & Boost MVP")
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
-@app.post("/upload")
+def error_response(request_id: str, code: str, message: str, status_code: int):
+    return JSONResponse(
+        status_code=status_code,
+        content={"ok": False, "requestId": request_id, "error": {"code": code, "message": message}}
+    )
+
+@app.get("/")
+async def index():
+    return FileResponse("static/index.html")
+
+@app.post("/api/v1/upload")
 async def upload_resume(file: UploadFile = File(...)):
-    
-    # ۱. اعتبارسنجی فایل
-    if not file.filename.endswith(".pdf") and file.content_type != "application/pdf":
-        raise HTTPException(status_code=400, detail="Error: Only PDF files are allowed!")
-    
-    file_location = f"uploads/{file.filename}"
-    
-    # ۲. ذخیره فایل
-    with open(file_location, "wb") as buffer:
-        buffer.write(await file.read())
-    
-    # ۳. استخراج متن (صدا زدن تابع مهیار)
-    extracted_text = extract_text_from_pdf(file_location)
-    
-    # ۴. ارسال به هوش مصنوعی (صدا زدن تابع نیما)
-    ai_result = get_roast_and_boost(extracted_text)
-    
-    # ۵. برگرداندن جواب نهایی به فرانت‌اند (دقیقاً طبق JSON Contract)
-    return {
-        "status": "success",
-        "message": "Resume processed successfully",
-        "data": ai_result
-    }
+    request_id = f"req_{uuid.uuid4().hex[:12]}"
+    filename = file.filename or "resume.pdf"
+
+    if not filename.lower().endswith(".pdf"):
+        return error_response(request_id, "INVALID_FILE_TYPE", "فقط فایل PDF مجاز است.", 400)
+
+    file_bytes = await file.read(MAX_FILE_SIZE + 1)
+
+    if len(file_bytes) > MAX_FILE_SIZE:
+        return error_response(request_id, "FILE_TOO_LARGE", "حجم فایل باید حداکثر ۵ مگابایت باشد.", 400)
+
+    if not file_bytes.startswith(b"%PDF-"):
+        return error_response(request_id, "INVALID_PDF", "فایل ارسال‌شده PDF معتبر نیست.", 400)
+
+    stored_path = UPLOAD_DIR / f"{request_id}.pdf"
+
+    try:
+        stored_path.write_bytes(file_bytes)
+        try:
+            clean_text = extract_text_from_pdf(str(stored_path))
+        except (pymupdf.FileDataError, RuntimeError, ValueError):
+            return error_response(request_id, "INVALID_PDF", "خواندن فایل PDF ممکن نبود.", 422)
+
+        if not clean_text.strip():
+            return error_response(request_id, "EMPTY_RESUME_TEXT", "متنی از این PDF استخراج نشد.", 422)
+
+        ai_result = await get_roast_and_boost(clean_text)
+
+        return {
+            "ok": True,
+            "requestId": request_id,
+            "data": {
+                "roast": ai_result["roast"],
+                "boost": ai_result["boost"],
+                "meta": {
+                    "fileName": filename,
+                    "processedAt": datetime.now(timezone.utc).isoformat()
+                }
+            }
+        }
+
+    except AIServiceError as exc:
+        status_map = {
+            "AI_TIMEOUT": 504,
+            "AI_RATE_LIMIT": 503,
+            "AI_CONNECTION_ERROR": 502,
+            "AI_PROVIDER_ERROR": 502,
+            "AI_NOT_CONFIGURED": 500,
+            "AI_INVALID_RESPONSE": 502,
+            "EMPTY_RESUME_TEXT": 422
+        }
+        return error_response(request_id, exc.code, exc.message, status_map.get(exc.code, 500))
+    except Exception:
+        return error_response(request_id, "INTERNAL_ERROR", "خطای داخلی در پردازش رزومه رخ داد.", 500)
+    finally:
+        if stored_path.exists():
+            stored_path.unlink()

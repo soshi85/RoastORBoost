@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Roast & Boost</title>
+<style>
+body{font-family:Tahoma,Arial,sans-serif;max-width:850px;margin:40px auto;padding:0 18px;background:#f7f8fa;color:#172033}
+.card{background:#fff;border:1px solid #e2e6ea;border-radius:14px;padding:22px;margin:18px 0}
+button{cursor:pointer;border:0;border-radius:10px;padding:12px 18px;background:#12344d;color:#fff}
+.muted{color:#6b7280}.error{color:#b42318}.hidden{display:none}.boost{border-top:1px solid #eee;padding-top:12px;margin-top:12px}
+</style>
+</head>
+<body>
+<h1>Roast & Boost 🔥🚀</h1>
+<p class="muted">AI اول رزومه‌ات را Roast می‌کند، بعد ۳ پیشنهاد عملی Boost می‌دهد.</p>
+<section class="card">
+<h2>رزومه‌ات را آپلود کن</h2>
+<p>فقط PDF، حداکثر ۵ مگابایت، بدون ثبت‌نام.</p>
+<input id="file" type="file" accept="application/pdf,.pdf"><br><br>
+<button id="submit">شروع تحلیل</button>
+<p id="status" class="muted"></p><p id="error" class="error"></p>
+</section>
+<section class="card hidden" id="result">
+<h2>🔥 Roast</h2><ul id="roast"></ul>
+<h2>🚀 Boost</h2><div id="boost"></div>
+<button id="again">تحلیل رزومه جدید</button>
+</section>
+<script>
+const fileEl=document.getElementById("file"),submit=document.getElementById("submit"),statusEl=document.getElementById("status"),
+errorEl=document.getElementById("error"),resultEl=document.getElementById("result"),roastEl=document.getElementById("roast"),
+boostEl=document.getElementById("boost"),again=document.getElementById("again");
+submit.onclick=async()=>{errorEl.textContent="";const file=fileEl.files[0];if(!file){errorEl.textContent="اول یک PDF انتخاب کن.";return}
+submit.disabled=true;statusEl.textContent="در حال آپلود و پردازش...";
+const form=new FormData();form.append("file",file);
+try{const res=await fetch("/api/v1/upload",{method:"POST",body:form});const body=await res.json();
+if(!res.ok||!body.ok)throw new Error(body?.error?.message||"پردازش ناموفق بود.");
+roastEl.innerHTML="";body.data.roast.forEach(t=>{const li=document.createElement("li");li.textContent=t;roastEl.appendChild(li)});
+boostEl.innerHTML="";body.data.boost.forEach(i=>{const d=document.createElement("div");d.className="boost";
+d.innerHTML=`<h3>${i.title}</h3><p><b>چرا؟</b> ${i.why}</p><p><b>اقدام:</b> ${i.action}</p>`;boostEl.appendChild(d)});
+resultEl.classList.remove("hidden");statusEl.textContent="تحلیل با موفقیت انجام شد."}
+catch(e){errorEl.textContent=e.message;statusEl.textContent=""}finally{submit.disabled=false}};
+again.onclick=()=>{fileEl.value="";resultEl.classList.add("hidden");roastEl.innerHTML="";boostEl.innerHTML="";statusEl.textContent="";errorEl.textContent=""};
+</script>
+</body></html>
